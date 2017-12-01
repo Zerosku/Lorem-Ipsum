@@ -14,6 +14,8 @@ html {
     color: #222;
     font-size: 1em;
     line-height: 1.4;
+    overflow-y: scroll;
+    background: linear-gradient(to right, rgb(31, 28, 44), rgb(146, 141, 171));
 }
 
 /*
@@ -97,22 +99,245 @@ textarea {
    Author's custom styles
    ========================================================================== */
 
+*, *:before, *:after {
+     box-sizing: border-box;
+}
+
+header {
+    background-image: url(http://via.placeholder.com/960x100/000?text=HeaderBGImage);
+    background-position: center;
+    width: 100%;
+}
+
+header h1 {
+    margin:0;
+    font-size: 1.5em;
+    position: absolute;
+    top: 0;
+    line-height: 100px;
+    padding: 0 6em;
+    color: #e9e9e9;
+}
+
+body {
+     font-family: 'Titillium Web', sans-serif;
+}
+
+a {
+     text-decoration: none;
+     color: #1ab188;
+     -webkit-transition: .5s ease;
+     transition: .5s ease;
+}
 
 
+div#signup{
+    padding-bottom: 10%;
+}
+
+h1 {
+    text-align: center;
+    color: #ffffff;
+    font-weight: 300;
+    margin: 0 0 40px;
+}
+
+h4 {
+    color: #1ab188;
+}
+
+ul {
+    display: block;
+    padding: 20px;
+}
+
+.form-input > div {
+    display: block;
+    width: 80%;
+}
+
+li {
+    display: list-item;
+    text-align: match-parent;
+}
+
+input, textarea {
+    font-size: 22px;
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 5px 10px;
+    background: none;
+    border: 1px solid #928DAB;
+    color: #ffffff;
+    border-radius: 0;
+    -webkit-transition: border-color .25s ease, box-shadow .25s ease;
+    transition: border-color .25s ease, box-shadow .25s ease;
+}
+input:focus, textarea:focus {
+    outline: 0;
+    border-color: #1ab188;
+}
+
+.form-input:hover {
+    box-shadow: 0 0 0 2px #1ab188;
+}
+
+textarea {
+    border: 2px solid #a0b3b0;
+    resize: vertical;
+}
+
+.form {
+    background:  rgba(0, 0, 0, 0.35);;
+    color: #928DAB;
+    padding: 40px;
+    max-width: 600px;
+    margin: 40px auto;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px 2px black;
+}
+
+.form-input {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0px;
+    border: none;
+    padding: 15px 0;
+    font-size: 2rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    background: #7D7894;
+    color: #3E3B4F;
+    width: 100%;
+}
+
+aside > .button {
+    font-size: 1.75rem;
+}
+
+.button:hover{
+    background-color: #1ab188;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    width:100%;
+    background: linear-gradient(to left, rgb(31, 28, 44), rgb(146, 141, 171));
+    /*height:100%;*/
+    /*position:fixed !important;*/
+    z-index:1;
+    /*overflow:auto;*/
+}
+
+.sidebartitle {
+    color: rgb(31, 28, 44);
+    padding-left: 3%;
+}
+
+.allcontent {
+    padding-left: 1%;
+    width:100%;
+    box-sizing: border-box;
+}
+
+.contenttitle {
+    color: #1ab188;
+}
+
+.content {
+    color: #7D7894;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.file {
+    width: 170px;
+    height: 165px;
+    margin: 10px;
+    background-color: #1ab188;
+}
+
+.alert {
+    background-color: #1ab188;
+}
+
+/* ==========================================================================
+   File Styling
+   ========================================================================== */
 
 
+/* ==========================================================================
+   Remember me styling
+   ========================================================================== */
+div.rememberdiv {
+    display: flex;
+    align-items: center;
+}
 
+.rememberme {
+    width: 0;
+    height: 0;
+    background: #ddd;
+    bottom: 10px;
 
+    border-radius: 100%;
+    position: relative;
+    box-shadow: 0px 1px 3px rgba(160,179,176,0.5);
+}
 
+.rememberme label {
+    display: block;
+    width: 30px;
+    height: 30px;
+    border-radius: 100px;
+    transition: all .5s ease;
+    cursor: pointer;
+    position: absolute;
+    z-index: 1;
+    background: #333;
+    box-shadow:inset 1px 2px 6px rgba(160,179,176,0.5);
+}
 
+.rememberme input[type=checkbox]:checked + label {
+    background: #1ab188;
+}
+/* ==========================================================================
+   Placeholder styling
+   ========================================================================== */
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:    #a0b3b0;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color:    #a0b3b0;
+    opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color:    #a0b3b0;
+    opacity:  1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 & Microsoft Edge */
+    color:    #a0b3b0;
+}
 
-
-
-
-
-
-
-
+::placeholder { /* Most modern browsers support this now. */
+    color:    #a0b3b0;
+}
 /* ==========================================================================
    Helper classes
    ========================================================================== */
@@ -205,6 +430,13 @@ textarea {
 
 @media only screen and (min-width: 35em) {
     /* Style adjustments for viewports that meet the condition */
+    .sidebar {
+        width: 20%;
+    }
+
+    .allcontent {
+        width: 65%;
+    }
 }
 
 @media print,
