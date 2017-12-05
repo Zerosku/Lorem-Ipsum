@@ -15,6 +15,7 @@ html {
     font-size: 1em;
     line-height: 1.4;
     overflow-y: scroll;
+    overflow-x: hidden;
     background: linear-gradient(to right, rgb(31, 28, 44), rgb(146, 141, 171));
 }
 
@@ -98,6 +99,10 @@ textarea {
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
+body {
+    font-family: 'Titillium Web', sans-serif;
+    overflow-x: hidden;
+}
 
 *, *:before, *:after {
      box-sizing: border-box;
@@ -107,6 +112,7 @@ header {
     background-image: url(http://via.placeholder.com/960x100/000?text=HeaderBGImage);
     background-position: center;
     width: 100%;
+    overflow-x: hidden;
 }
 
 header h1 {
@@ -117,10 +123,6 @@ header h1 {
     line-height: 100px;
     padding: 0 6em;
     color: #e9e9e9;
-}
-
-body {
-     font-family: 'Titillium Web', sans-serif;
 }
 
 a {
@@ -271,6 +273,7 @@ aside > .button {
     height: 165px;
     margin: 10px;
     background-color: #1ab188;
+    box-sizing: border-box;
 }
 
 .alert {
