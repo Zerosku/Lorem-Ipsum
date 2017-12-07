@@ -13,7 +13,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -42,26 +44,17 @@ public class LoginServlet extends HttpServlet {
         pst.setString(2, password);
         ResultSet rs = pst.executeQuery();
         
+        Cookie ck = new Cookie("auth", username);
+        ck.setMaxAge(30);
+        
         if (rs.next()){
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Login</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Welcome " + username + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            response.addCookie(ck);
+            response.sendRedirect("home.jsp");
+            return;
         } else {
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Login</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Wrong username or password </h1>");
-            out.println("</body>");
-            out.println("</html>");
+            RequestDispatcher rd = request.getRequestDispatcher("login.html");
+            out.println("Wrong username or password");
+            rd.include(request, response);
         }
         
         } catch (SQLException ex) {
