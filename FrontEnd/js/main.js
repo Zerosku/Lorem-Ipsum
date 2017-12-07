@@ -6,6 +6,7 @@ const sidebar = document.querySelector('.sidebar');
 const file = document.querySelectorAll('.file');
 const folder = document.querySelectorAll('.folder');
 const lightbox = document.querySelector('.lightbox');
+const user_name = document.querySelector('.username');
 
 // create new DOM elements
 const dropDiv = document.createElement('div'); // container div element
@@ -57,3 +58,14 @@ document.addEventListener('click', (evt) => {
       lightbox.classList.toggle('hidden'); // lightbox toggle
     }
 });
+
+function cookie() {
+  let getCookies = document.cookie;
+
+  if (getCookies != null) {
+    let username = getCookie('auth');
+    if (username != '') {
+      user_name.innerHTML = 'Hello ' + username;
+    }
+  }
+}
