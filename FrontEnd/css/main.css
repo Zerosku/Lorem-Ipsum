@@ -267,6 +267,8 @@ aside > .button {
     box-sizing: border-box;
     margin-top: 25px;
     margin-bottom: 25px;
+    padding-left: 25px;
+    padding-right: 25px;
 }
 
 .contenttitle {
@@ -277,7 +279,7 @@ aside > .button {
     color: #7D7894;
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
+    justify-content: center;
 }
 
 .folder, .file {
@@ -312,6 +314,21 @@ aside > .button {
   background-color: #34373c;
   border: 1px solid white;
   margin: 15px;
+  font-family: 'Titillium Web', sans-serif;
+}
+
+.lightbox {
+  width: 60%;
+  background-color: #fff;
+  position: absolute;
+  left: 50%;
+  margin: 0 0 0 -30%;
+  top: 1rem;
+  padding: 1rem;
+}
+
+.hamburger {
+  display: none;
 }
 
 /* ==========================================================================
@@ -477,10 +494,14 @@ div.rememberdiv {
     .allcontent {
       display: table-cell;
       width: auto;
-      padding-left: 150px;
-      padding-right: 150px;
+      padding-left: 50px;
+      padding-right: 50px;
       padding-top: 50px;
       padding-bottom: 50px;
+    }
+
+    .hamburger {
+      display: block;
     }
 }
 

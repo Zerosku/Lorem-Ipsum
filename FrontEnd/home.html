@@ -21,7 +21,7 @@
 
         <!-- Sidebar -->
         <aside class="animated sidebar hidden">
-            
+
             <a href="#">
               <div class="button">Home</div>
             </a>
@@ -33,15 +33,24 @@
             <a href="#">
               <div class="button">Groups</div>
             </a>
+
+            <a href="#">
+              <div class="button upload">Upload</div>
+            </a>
+
+            <a href="#">
+              <div class="button sign-out">Sign out</div>
+            </a>
         </aside>
 
         <!-- Page Content -->
         <main class="allcontent">
 
-          <i class="fa fa-2x fa-bars" aria-hidden="true"></i>
+          <i class="fa fa-2x fa-bars hamburger" aria-hidden="true"></i>
 
           <header>
               <img src="img/logo.png" alt="logo" class="logo">
+              <h1 class="username">käyttäjä</h1>
           </header>
 
           <div class="contenttitle">
@@ -73,9 +82,6 @@
                 <div class="file">4</div>
                 <div class="file">5</div>
                 <div class="file">6</div>
-                <div class="file">7</div>
-                <div class="file">8</div>
-                <div class="file">9</div>
 
             </section>
 
@@ -83,9 +89,12 @@
     </div>
 
 
-        <!-- iso kuva tänne -->
-        <div id="modal" class="hidden">
-            <a href="#" class="closeBtn">&#215;</a>
+        <!-- lightbox for upload -->
+        <div class="hidden lightbox">
+          <form class="upload-form" action="servlet" method="post">
+            <input type="file" name="file-upload" value="Give file">
+            <input type="submit" value="Upload">
+          </form>
         </div>
 
         <script src="js/main.js"></script>
