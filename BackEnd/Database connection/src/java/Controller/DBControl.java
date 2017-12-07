@@ -14,7 +14,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class DBControl {
-   
+    
     @PersistenceContext
     private EntityManager em;
  
@@ -34,6 +34,7 @@ public class DBControl {
     //asking user object, because we don't now that user id yet
     public Users insert (Users u){
         em.persist(u);
+                
         return u;
     }
 }

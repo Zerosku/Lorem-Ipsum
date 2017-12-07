@@ -27,6 +27,56 @@ const deleteText = document.createTextNode('Delete');
 deleteLink.appendChild(deleteText);
 deleteLink.className = 'smallButton';
 
+// function that gets cookie from client by cookie name
+
+function getCookie(name) {
+    var dc = document.cookie;
+    var prefix = name + "=";
+    var begin = dc.indexOf("; " + prefix);
+    if (begin == -1) {
+        begin = dc.indexOf(prefix);
+        if (begin != 0) return null;
+    }
+    else
+    {
+        begin += 2;
+        var end = document.cookie.indexOf(";", begin);
+        if (end == -1) {
+        end = dc.length;
+        }
+    }
+    // because unescape has been deprecated, replaced with decodeURI
+    //return unescape(dc.substring(begin + prefix.length, end));
+    return decodeURI(dc.substring(begin + prefix.length, end));
+} 
+
+// checks user authentication by cookie value
+const cookie = () => {
+    
+  let checkAuth = getCookie("auth");
+
+  if (checkAuth !== null) {
+    let username = getCookie('auth');
+    user_name.innerHTML = 'Hello ' + username;
+  } else {
+      alert("Session expired, please re-login");
+      window.location.replace("index.html");
+  }
+};
+
+document.onload = cookie();
+
+// sets cookie value to null and redirects to login site
+const logout = () => {
+    
+    let checkAuth = getCookie("auth");
+    
+    checkAuth = null;
+};
+
+
+
+
 // click listener for hamburger menu button
 hamMenu.addEventListener('click', (evt) => {
 
@@ -56,16 +106,9 @@ document.addEventListener('click', (evt) => {
       dropDiv.remove();
     } else if (click.className.includes('upload')) {
       lightbox.classList.toggle('hidden'); // lightbox toggle
+    } else if (click.className.includes('sign-out')){
+        logout();
+        window.location.replace("index.html");
     }
 });
 
-function cookie() {
-  let getCookies = document.cookie;
-
-  if (getCookies != null) {
-    let username = getCookie('auth');
-    if (username != '') {
-      user_name.innerHTML = 'Hello ' + username;
-    }
-  }
-}

@@ -45,11 +45,11 @@ public class LoginServlet extends HttpServlet {
         ResultSet rs = pst.executeQuery();
         
         Cookie ck = new Cookie("auth", username);
-        ck.setMaxAge(30);
+        ck.setMaxAge(600);
         
         if (rs.next()){
             response.addCookie(ck);
-            response.sendRedirect("home.jsp");
+            response.sendRedirect("home.html");
             return;
         } else {
             RequestDispatcher rd = request.getRequestDispatcher("login.html");
