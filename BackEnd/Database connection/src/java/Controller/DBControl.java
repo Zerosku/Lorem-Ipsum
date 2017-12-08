@@ -10,7 +10,7 @@ import javax.persistence.PersistenceContext;
  
 /**
  *
- 
+ *@author joonasrl
  */
 @Stateless
 public class DBControl {

@@ -95,8 +95,8 @@
 
         <!-- lightbox for upload -->
         <div class="hidden lightbox">
-          <form class="upload-form" action="servlet" method="post">
-            <input type="file" name="file-upload" value="Give file">
+          <form class="upload-form" method="post" enctype="multipart/form-data" action="do">
+            <input type="file" name="fileup" accept="image/*">
             <input type="submit" value="Upload">
           </form>
         </div>
