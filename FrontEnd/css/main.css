@@ -174,7 +174,7 @@ input, textarea {
     padding: 5px 10px;
     background: none;
     border: 1px solid #928DAB;
-    color: #ffffff;
+    color: black;
     border-radius: 0;
     -webkit-transition: border-color .25s ease, box-shadow .25s ease;
     transition: border-color .25s ease, box-shadow .25s ease;
@@ -317,8 +317,21 @@ aside > .button {
   font-family: 'Titillium Web', sans-serif;
 }
 
+/* lightbox is container for upload-form so it looks cool */
 .lightbox {
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  position: absolute;
+  margin: 0 auto;
+  top: 0;
+  left: 0;
+  z-index: 10;
+}
+
+.upload-form {
   width: 60%;
+  color: black;
   background-color: #fff;
   position: absolute;
   left: 50%;
@@ -329,6 +342,54 @@ aside > .button {
 
 .hamburger {
   display: none;
+}
+
+.inputfile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+.inputfile + label {
+  font-size: 32px;
+  font-weight: 600;
+  color: white;
+  background-color: #3F434A;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.inputfile:focus + label,
+.inputfile + label:hover {
+  background-color: #1ab188;
+}
+
+.upload-label {
+  text-transform: uppercase;
+  width: 100%;
+  text-align: center;
+}
+
+.upload-x {
+  color: black;
+  cursor: pointer;
+}
+
+.white {
+  color: white;
+  cursor: pointer;
+}
+
+.sama {
+  font-family: 'Titillium Web', sans-serif;
+  color: white;
+}
+
+.upload-span {
+  vertical-align: super;
 }
 
 /* ==========================================================================
