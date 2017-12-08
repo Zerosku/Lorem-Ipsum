@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author joonasrl
+ * @author joona
  */
 @Entity
 @Table(name = "files")
@@ -47,15 +47,15 @@ public class Files implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "file_id")
-    private Integer fileId;
-    @Size(max = 255)
+    private int fileId;
+    //@Size(max = 255)
     @Column(name = "file_name")
     private String fileName;
     @Column(name = "upload_date")
     @Temporal(TemporalType.DATE)
     private Date uploadDate;
     @Column(name = "file_path")
-    private Integer filePath;
+    private String filePath;
     @JoinTable(name = "has_favorites", joinColumns = {
         @JoinColumn(name = "file_id", referencedColumnName = "file_id")}, inverseJoinColumns = {
         @JoinColumn(name = "user_id", referencedColumnName = "user_id")})
@@ -71,15 +71,15 @@ public class Files implements Serializable {
     public Files() {
     }
 
-    public Files(Integer fileId) {
+    public Files(int fileId) {
         this.fileId = fileId;
     }
 
-    public Integer getFileId() {
+    public int getFileId() {
         return fileId;
     }
 
-    public void setFileId(Integer fileId) {
+    public void setFileId(int fileId) {
         this.fileId = fileId;
     }
 
@@ -99,11 +99,11 @@ public class Files implements Serializable {
         this.uploadDate = uploadDate;
     }
 
-    public Integer getFilePath() {
+    public String getFilePath() {
         return filePath;
     }
 
-    public void setFilePath(Integer filePath) {
+    public void setFilePath(String filePath) {
         this.filePath = filePath;
     }
 

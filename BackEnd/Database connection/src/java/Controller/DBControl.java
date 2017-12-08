@@ -1,6 +1,7 @@
 
 package Controller;
  
+import Model.Files;
 import Model.Users;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -10,11 +11,11 @@ import javax.persistence.PersistenceContext;
  
 /**
  *
- *@author joonasrl
+ 
  */
 @Stateless
 public class DBControl {
-    
+   
     @PersistenceContext
     private EntityManager em;
  
@@ -34,8 +35,12 @@ public class DBControl {
     //asking user object, because we don't now that user id yet
     public Users insert (Users u){
         em.persist(u);
-                
         return u;
+    }
+   
+    public Files insertFiles (Files f){
+        em.persist(f);
+        return f;
     }
 }
     

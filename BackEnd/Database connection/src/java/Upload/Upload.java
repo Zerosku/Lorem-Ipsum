@@ -7,6 +7,7 @@ package Upload;
 
 import Controller.DBControl;
 import Model.Files;
+import Model.Users;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -27,8 +28,8 @@ import javax.servlet.http.HttpServletResponse;
 @MultipartConfig(location = "/var/www/html/uploads")
 public class Upload extends HttpServlet {
     
-    /*@EJB
-    private DBControl dbc;*/
+    @EJB
+    private DBControl dbc;
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -45,7 +46,19 @@ public class Upload extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             request.getPart("fileup").write(request.getPart("fileup").getSubmittedFileName());
             out.print("{\"src\" : \"10.114.34.143/uploads/" + request.getPart("fileup").getSubmittedFileName() +"\"}");
-            //String fileName = "10.114.34.143/uploads/" + request.getPart("fileup").getSubmittedFileName();
+            String filePath = "10.114.34.143/uploads/" + request.getPart("fileup").getSubmittedFileName();
+            String fileName = request.getPart("fileup").getSubmittedFileName();
+            Users u = new Users();
+            int user_id = u.getUserId(); 
+            
+            Files f = new Files();
+            
+            
+            u.setUserId(user_id);
+            f.setFileName(fileName);
+            f.setFilePath(filePath);
+            dbc.insertFiles(f);
+            
         }
     }
 
@@ -60,4 +73,3 @@ public class Upload extends HttpServlet {
     }// </editor-fold>
 
 }
-

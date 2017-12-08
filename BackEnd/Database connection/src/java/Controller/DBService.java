@@ -13,7 +13,6 @@ import java.util.Date;
  
 /**
  * REST Web Service
- * @author joonasrl
  */
 @Path("service")
 public class DBService {
@@ -48,10 +47,11 @@ public class DBService {
        Users u = new Users();
        u.setUsername(name);
        u.setPasswrd(pass);
-        
+       
         return dbc.insert(u);
         
     }
+    
        
     /**
      * PUT method for updating or creating an instance of DBService
