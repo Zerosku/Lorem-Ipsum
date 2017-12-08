@@ -56,7 +56,7 @@ const cookie = () => {
   let checkAuth = getCookie("auth");
 
   if (checkAuth !== null) {
-    let username = getCookie('auth');
+    let username = getCookie("auth");
     user_name.innerHTML = 'Hello ' + username;
   } else {
       alert("Session expired, please re-login");
@@ -72,9 +72,7 @@ const logout = () => {
     let checkAuth = getCookie("auth");
     
     checkAuth = null;
-};
-
-
+}
 
 
 // click listener for hamburger menu button
@@ -106,9 +104,6 @@ document.addEventListener('click', (evt) => {
       dropDiv.remove();
     } else if (click.className.includes('upload')) {
       lightbox.classList.toggle('hidden'); // lightbox toggle
-    } else if (click.className.includes('sign-out')){
-        logout();
-        window.location.replace("index.html");
     }
 });
 

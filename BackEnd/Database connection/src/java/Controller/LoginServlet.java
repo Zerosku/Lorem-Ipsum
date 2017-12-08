@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -50,7 +51,7 @@ public class LoginServlet extends HttpServlet {
         if (rs.next()){
             response.addCookie(ck);
             response.sendRedirect("home.html");
-            return;
+            
         } else {
             RequestDispatcher rd = request.getRequestDispatcher("login.html");
             out.println("Wrong username or password");
