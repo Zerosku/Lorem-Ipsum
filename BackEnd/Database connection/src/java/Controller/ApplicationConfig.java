@@ -10,7 +10,7 @@ import javax.ws.rs.core.Application;
  
 /**
  *
- *
+ *@author joonasrl
  */
 @javax.ws.rs.ApplicationPath("db")
 public class ApplicationConfig extends Application {

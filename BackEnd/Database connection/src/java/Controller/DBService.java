@@ -13,6 +13,7 @@ import java.util.Date;
  
 /**
  * REST Web Service
+ * @author joonasrl
  */
 @Path("service")
 public class DBService {
