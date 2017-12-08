@@ -15,8 +15,8 @@
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="css/font-awesome.css">
         <link rel="stylesheet" href="css/animate.css">
-        
-        
+
+
     </head>
     <body>
     <div class="container">
@@ -37,12 +37,12 @@
             </a>
 
             <a href="#">
-              <div class="button upload">Upload</div>
+              <div class="button upload-button">Upload</div>
             </a>
 
             <a href="#" class="sign-out">
                 <form action="Logout" method="post">
-                    <button type="submit" class="button button-block"/>logout</button>
+                    <button type="submit" class="white button button-block"/>logout</button>
                 </form>
             </a>
         </aside>
@@ -95,12 +95,21 @@
 
         <!-- lightbox for upload -->
         <div class="hidden lightbox">
-          <form class="upload-form" method="post" enctype="multipart/form-data" action="do">
-            <input type="file" name="fileup" accept="image/*">
-            <input type="submit" value="Upload">
+
+          <form class="upload-form" action="do" method="post" enctype="multipart/form-data">
+
+            <i class="upload-x fa fa-2x fa-times" aria-hidden="true"></i><br><br>
+
+            <!-- input hidden -->
+            <input onchange="changeUploadText()" id="file" type="file" name="fileup" value="Give file" class="inputfile hidden" required />
+
+            <label class="sama upload-label" for="file"><i class="fa fa-2x fa-cloud-upload" aria-hidden="true"></i>
+              <span class="upload-span">Select a file</span></label>
+            <button class="sama button button-block" type="submit">Upload</button>
           </form>
+
         </div>
-        
+
         <script src="main.js"></script>
     </body>
 </html>
