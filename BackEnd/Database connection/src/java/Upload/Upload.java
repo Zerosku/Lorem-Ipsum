@@ -14,6 +14,7 @@ import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -42,8 +43,19 @@ public class Upload extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+            
         response.setContentType("application/json");
         try (PrintWriter out = response.getWriter()) {
+            
+            Cookie[] cookies = request.getCookies();
+            String username = "";
+            
+            for (int i = 0; i < cookies.length; i++) {
+               
+                username = cookies[i].getValue();
+                
+              }
+            
             request.getPart("fileup").write(request.getPart("fileup").getSubmittedFileName());
             out.print("{\"src\" : \"10.114.34.143/uploads/" + request.getPart("fileup").getSubmittedFileName() +"\"}");
             String filePath = "10.114.34.143/uploads/" + request.getPart("fileup").getSubmittedFileName();
@@ -53,8 +65,8 @@ public class Upload extends HttpServlet {
             
             Files f = new Files();
             
-            
-            u.setUserId(user_id);
+            f.setUsername(username);
+            //u.setUserId(user_id);
             f.setFileName(fileName);
             f.setFilePath(filePath);
             dbc.insertFiles(f);

@@ -3,6 +3,7 @@ package Controller;
  
 import Model.Files;
 import Model.Users;
+import com.google.gson.Gson;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -31,6 +32,12 @@ public class DBControl {
     
         return em.createNamedQuery("users.findByName").toString();
     }
+    
+    public List<Files> getMedia(){
+        List<Files> lst = em.createNamedQuery("Files.findAll").getResultList();
+        return lst;
+    }
+    
     
     //asking user object, because we don't now that user id yet
     public Users insert (Users u){

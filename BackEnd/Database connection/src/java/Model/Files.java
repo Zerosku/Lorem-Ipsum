@@ -47,13 +47,15 @@ public class Files implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "file_id")
-    private int fileId;
+    private Integer fileId;
     //@Size(max = 255)
     @Column(name = "file_name")
     private String fileName;
     @Column(name = "upload_date")
     @Temporal(TemporalType.DATE)
     private Date uploadDate;
+    @Column(name = "username", length=255)
+    private String username;
     @Column(name = "file_path")
     private String filePath;
     @JoinTable(name = "has_favorites", joinColumns = {
@@ -89,6 +91,14 @@ public class Files implements Serializable {
 
     public void setFileName(String fileName) {
         this.fileName = fileName;
+    }
+    
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public Date getUploadDate() {
@@ -154,7 +164,7 @@ public class Files implements Serializable {
 
     @Override
     public String toString() {
-        return "Model.Files[ fileId=" + fileId + " ]";
+        return "("+filePath+":"+fileName+":"+username+")";
     }
     
 }
