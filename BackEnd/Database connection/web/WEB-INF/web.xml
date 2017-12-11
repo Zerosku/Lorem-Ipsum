@@ -16,6 +16,22 @@
         <servlet-name>Logout</servlet-name>
         <url-pattern>/Logout</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>ListFiles</servlet-name>
+        <servlet-class>UserFunctionality.ListFiles</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ListFiles</servlet-name>
+        <url-pattern>/ListFiles</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>DeleteFile</servlet-name>
+        <servlet-class>UserFunctionality.DeleteFile</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeleteFile</servlet-name>
+        <url-pattern>/DeleteFile</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

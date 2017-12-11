@@ -39,6 +39,12 @@ public class DBControl {
         List<Files> lst = em.createNamedQuery("Files.findUserFiles").setParameter("username", username).getResultList();
         return lst;
     }
+    
+     //delete file for a specific user
+    public List<Files> deleteMedia(String filename){
+        List<Files> lst = em.createNamedQuery("Files..deleteUserFile").setParameter("fileName", filename).getResultList();
+        return lst;
+    }
 
     //inserts usernames into db
     public Users insert (Users u){

@@ -11,6 +11,14 @@ const uploadFile = document.querySelector('#file');
 const uploadLabel = document.querySelector('.upload-span');
 const passSign = document.querySelector('#passwordSignUp');
 const passLogin = document.querySelector('#passwordLogin');
+const home = document.querySelector('#home');
+const favorites = document.querySelector('#favorites');
+const fileSection = document.querySelector('.files');
+const downloadBtn = document.querySelector('.download');
+const contentTitle = document.querySelector('.contenttitle');
+const deleteForm = document.querySelector('.deleteForm');
+let deleteInput = document.querySelector('.deleteInput');
+
 
 // create new DOM elements
 const dropDiv = document.createElement('div'); // container div element
@@ -19,20 +27,20 @@ dropDiv.className = 'dropdown';
 const downloadLink = document.createElement('a'); // download button
 const downloadText = document.createTextNode('Download');
 downloadLink.appendChild(downloadText);
-downloadLink.className = 'smallButton';
+downloadLink.className += 'smallButton download';
 
 const favLink = document.createElement('a'); // favorite button
 const favText = document.createTextNode('Favourite');
 favLink.appendChild(favText);
-favLink.className = 'smallButton';
+favLink.className += 'smallButton favorite';
 
 const deleteLink = document.createElement('a'); // delete button
 const deleteText = document.createTextNode('Delete');
 deleteLink.appendChild(deleteText);
-deleteLink.className = 'smallButton';
+deleteLink.className += 'smallButton delete';
 
 // function that gets cookie from client by cookie name
-function getCookie(name) {
+const getCookie = (name) => {
     var dc = document.cookie;
     var prefix = name + "=";
     var begin = dc.indexOf("; " + prefix);
@@ -51,7 +59,7 @@ function getCookie(name) {
     // because unescape has been deprecated, replaced with decodeURI
     //return unescape(dc.substring(begin + prefix.length, end));
     return decodeURI(dc.substring(begin + prefix.length, end));
-}
+};
 
 // checks user authentication by cookie value
 const cookie = () => {
@@ -72,8 +80,7 @@ document.onload = cookie(); // when user enters home.html
 const logout = () => {
     let checkAuth = getCookie("auth");
     checkAuth = null;
-}
-
+};
 
 // click listener for hamburger menu button
 hamMenu.addEventListener('click', (evt) => {
@@ -92,7 +99,6 @@ document.addEventListener('click', (evt) => {
     if (click.className.includes('fa-info-circle')) { // the info button of file/folder
 
       click.className = 'fa fa-2x fa-times-circle';
-
       // here we construct the dropdown menu from components above
       dropDiv.appendChild(downloadLink);
       dropDiv.appendChild(favLink);
@@ -101,10 +107,29 @@ document.addEventListener('click', (evt) => {
     } else if (click.className.includes('fa-times-circle')) { // the x button of file/folder
       click.className = 'fa fa-2x fa-info-circle';
       dropDiv.remove();
+
     } else if (click.className.includes('upload-button')) { // the upload button
       lightbox.classList.toggle('hidden'); // lightbox toggle
+
     } else if (click.className.includes('upload-x')) { // x button of upload lightbox
       lightbox.classList.toggle('hidden'); // lightbox toggle
+
+    } else if (click.className.includes('download')) { // this is so we can download right files from server
+      let notparent = click.parentElement;
+      let parent = notparent.parentElement;
+      let url = parent.getAttribute('data-fileurl');
+      click.setAttribute('href', 'http://' + url);
+      click.setAttribute('download', '');
+
+    } else if (click.className.includes('delete')) { // this is so we can delete the right file from server and db
+      let notparent = click.parentElement; // dropdown element
+      let parent = notparent.parentElement; // i element
+      let url = parent.getAttribute('data-filepath'); // this is actually filename
+      
+      deleteInput.value = url;
+      console.log(url);
+      console.log(deleteForm.value);
+      deleteFile(deleteForm);
     }
 });
 
@@ -113,81 +138,67 @@ const changeUploadText = () => {
   if (uploadFile && uploadFile.value) {
     uploadLabel.innerHTML = 'File fetched';
   } else {
-    uploadLabel.innerHTML = 'Select a file'
+    uploadLabel.innerHTML = 'Select a file';
 
   }
-}
-
-// below are the neccesary functions for password hashing
-// if you want to hash pass you must have the forms onSubmit="hashPass();"
-const convertStringToArrayBufferView = (str) => {
-	let bytes = new Uint8Array(str.length);
-	for (let iii = 0; iii < str.length; iii++) {
-		bytes[iii] = str.charCodeAt(iii);
-	}
-
-	return bytes;
 };
 
-const convertArrayBufferToHexaDecimal = (buffer) => {
-	let data_view = new DataView(buffer);
-	let iii, len, hex = '',
-		c;
+// click listener for home menu button
+home.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  getFiles();
+});
 
-	for (iii = 0, len = data_view.byteLength; iii < len; iii += 1) {
-		c = data_view.getUint8(iii).toString(16);
-		if (c.length < 2) {
-			c = '0' + c;
-		}
+const getFiles = () => { //here we fetch our own files (VERY IMPORTANTE!!!)
 
-		hex += c;
-	}
+  fetch('db/service/jsonboii?', { // put here the correct servlet
+      method: 'GET',
+      credentials: "same-origin"
+})
+  .then( (response) => {
+    return response.json();
+  })
+  .then( (result) => {
+    for (let i = 0; i < result.length; i++) { // first get all info in array form (each tuple has array inside that has filename & filepath)
 
-	return hex;
+      console.log(result[i]);
+      let fileinfo = result[i]; // here we get to do some shit with the individual tuples, first one is always filepath, the second is filename
+      // fileinfo[0] == www-filepath
+      // fileinfo[1] == filename
+
+      const fileBox = `<div class="file">
+      <p class="filedesc">${fileinfo[1]}</p>
+      <img src="http://${fileinfo[0]}" alt="${fileinfo[1]}" />
+        <i data-fileurl="${fileinfo[0]}" data-filepath="${fileinfo[1]}" class="fa fa-2x fa-info-circle" aria-hidden="true"></i>
+      </div>`;
+
+      fileSection.innerHTML += fileBox;
+
+      contentTitle.innerHTML = `<h1>My Files</h1>`;
+    }
+
+  });
 };
 
-const hashSign = () => {
+document.onload = getFiles(); // this is so we get our own files when we log in
 
-	let pass = passLogin.value;
-	const crypto = window.crypto || window.msCrypto;
+const deleteFile = (element) => {
+  let fData = new FormData(element);
 
-	if (crypto.subtle) {
-		alert("Cryptography API Supported");
+  const settings = {
+    credentials: "same-origin",
+    method: 'post',
+    body: element,
+  };
+  console.log('fdata: ' + fData);
 
-		const promise = crypto.subtle.digest({
-			name: "SHA-256"
-		}, convertStringToArrayBufferView(pass));
-
-		promise.then(function (result) {
-			const hash_value = convertArrayBufferToHexaDecimal(result);
-			console.log("hash: " + hash_value)
-			passLogin.value = hash_value;
-      console.log(password.value);
-		});
-	} else {
-		alert("Cryptography API not Supported");
-	}
-};
-
-const hashLogin = () => {
-
-	let pass = passSign.value;
-	const crypto = window.crypto || window.msCrypto;
-
-	if (crypto.subtle) {
-		alert("Cryptography API Supported");
-
-		const promise = crypto.subtle.digest({
-			name: "SHA-256"
-		}, convertStringToArrayBufferView(pass));
-
-		promise.then(function (result) {
-			const hash_value = convertArrayBufferToHexaDecimal(result);
-			console.log("hash: " + hash_value)
-			passSign.value = hash_value;
-      console.log(password.value);
-		});
-	} else {
-		alert("Cryptography API not Supported");
-	}
+  fetch('DeleteFile', settings) // deletefile is the name of servlet
+  .then( (response) => {
+    return response;
+  })
+  .then( (result) => {
+    console.log(result);
+  });
+  
+  deleteForm.submit();
 };

@@ -49,6 +49,14 @@ public class DBService {
         return dbc.getMedia(user);
     }
     
+     @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("deleteFile")
+    public List<Files> deleteFile(String filename) {
+        
+        return dbc.getMedia(filename);
+    }
+    
     //new user register
     @POST
     @Produces(MediaType.APPLICATION_JSON)

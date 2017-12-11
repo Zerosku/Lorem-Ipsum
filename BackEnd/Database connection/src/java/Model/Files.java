@@ -39,7 +39,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Files.findAll", query = "SELECT f FROM Files f")
     , @NamedQuery(name = "Files.findUserFiles", query = "SELECT f.filePath,f.fileName FROM Files f WHERE f.username = :username")
     //, @NamedQuery(name = "Files.findUserFavorites", query = "SELECT f.favorites,f.fileName FROM Files f WHERE f.username = :username")
-    //, @NamedQuery(name = "Files.deleteUserFile", query = "DELETE FROM Files f WHERE f.fileName = :filename")
+    , @NamedQuery(name = "Files.deleteUserFile", query = "DELETE FROM Files f WHERE f.fileName = :filename")
     , @NamedQuery(name = "Files.findByFileId", query = "SELECT f FROM Files f WHERE f.fileId = :fileId")
     , @NamedQuery(name = "Files.findByFileName", query = "SELECT f FROM Files f WHERE f.fileName = :fileName")
     , @NamedQuery(name = "Files.findByUploadDate", query = "SELECT f FROM Files f WHERE f.uploadDate = :uploadDate")
