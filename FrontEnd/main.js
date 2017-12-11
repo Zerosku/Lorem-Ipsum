@@ -11,6 +11,12 @@ const uploadFile = document.querySelector('#file');
 const uploadLabel = document.querySelector('.upload-span');
 const passSign = document.querySelector('#passwordSignUp');
 const passLogin = document.querySelector('#passwordLogin');
+const home = document.querySelector('#home');
+const favorites = document.querySelector('#favorites');
+const fileSection = document.querySelector('.files');
+const downloadBtn = document.querySelector('.download');
+const contentTitle = document.querySelector('.contenttitle');
+
 
 // create new DOM elements
 const dropDiv = document.createElement('div'); // container div element
@@ -19,20 +25,20 @@ dropDiv.className = 'dropdown';
 const downloadLink = document.createElement('a'); // download button
 const downloadText = document.createTextNode('Download');
 downloadLink.appendChild(downloadText);
-downloadLink.className = 'smallButton';
+downloadLink.className += 'smallButton download';
 
 const favLink = document.createElement('a'); // favorite button
 const favText = document.createTextNode('Favourite');
 favLink.appendChild(favText);
-favLink.className = 'smallButton';
+favLink.className += 'smallButton favorite';
 
 const deleteLink = document.createElement('a'); // delete button
 const deleteText = document.createTextNode('Delete');
 deleteLink.appendChild(deleteText);
-deleteLink.className = 'smallButton';
+deleteLink.className += 'smallButton delete';
 
 // function that gets cookie from client by cookie name
-function getCookie(name) {
+const getCookie = (name) => {
     var dc = document.cookie;
     var prefix = name + "=";
     var begin = dc.indexOf("; " + prefix);
@@ -51,7 +57,7 @@ function getCookie(name) {
     // because unescape has been deprecated, replaced with decodeURI
     //return unescape(dc.substring(begin + prefix.length, end));
     return decodeURI(dc.substring(begin + prefix.length, end));
-}
+};
 
 // checks user authentication by cookie value
 const cookie = () => {
@@ -72,8 +78,7 @@ document.onload = cookie(); // when user enters home.html
 const logout = () => {
     let checkAuth = getCookie("auth");
     checkAuth = null;
-}
-
+};
 
 // click listener for hamburger menu button
 hamMenu.addEventListener('click', (evt) => {
@@ -92,7 +97,6 @@ document.addEventListener('click', (evt) => {
     if (click.className.includes('fa-info-circle')) { // the info button of file/folder
 
       click.className = 'fa fa-2x fa-times-circle';
-
       // here we construct the dropdown menu from components above
       dropDiv.appendChild(downloadLink);
       dropDiv.appendChild(favLink);
@@ -101,10 +105,26 @@ document.addEventListener('click', (evt) => {
     } else if (click.className.includes('fa-times-circle')) { // the x button of file/folder
       click.className = 'fa fa-2x fa-info-circle';
       dropDiv.remove();
+
     } else if (click.className.includes('upload-button')) { // the upload button
       lightbox.classList.toggle('hidden'); // lightbox toggle
+
     } else if (click.className.includes('upload-x')) { // x button of upload lightbox
       lightbox.classList.toggle('hidden'); // lightbox toggle
+
+    } else if (click.className.includes('download')) { // this is so we can download right files from server
+      let notparent = click.parentElement;
+      let parent = notparent.parentElement;
+      let url = parent.getAttribute('data-fileurl');
+      click.setAttribute('href', 'http://' + url);
+      click.setAttribute('download', '');
+
+    } else if (click.className.includes('delete')) { // this is so we can delete the right file from server and db
+      let notparent = click.parentElement; // dropdown element
+      let parent = notparent.parentElement; // i element
+      let url = parent.getAttribute('data-filepath');
+
+      deleteFile(url);
     }
 });
 
@@ -116,4 +136,57 @@ const changeUploadText = () => {
     uploadLabel.innerHTML = 'Select a file'
 
   }
-}
+};
+
+// click listener for home menu button
+home.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  getFiles();
+});
+
+const getFiles = () => { //here we fetch our own files (VERY IMPORTANTE!!!)
+
+  fetch('jsonboii') // put here the correct servlet
+  .then( (response) => {
+    return response.json();
+  })
+  .then( (result) => {
+    for (let i = 0; i < result.length; i++) { // first get all info in array form (each tuple has array inside that has filename & filepath)
+
+      //console.log(result[i]);
+      let fileinfo = result[i]; // here we get to do some shit with the individual tuples, first one is always filepath, the second is filename
+      // fileinfo[0] == www-filepath
+      // fileinfo[1] == filename
+
+      const fileBox = `<div class="file">
+      <p class="filedesc">${fileinfo[1]}</p>
+      <img src="http://${fileinfo[0]}" alt="${fileinfo[1]}" />
+        <i data-fileurl="${fileinfo[0]}" data-filepath="${fileinfo[1]}" class="fa fa-2x fa-info-circle" aria-hidden="true"></i>
+      </div>`;
+
+      fileSection.innerHTML += fileBox;
+
+      contentTitle.innerHTML = `<h1>My Files</h1>`;
+    }
+
+  });
+};
+
+document.onload = getFiles(); // this is so we get our own files when we log in
+
+const deleteFile = (element) => {
+  let fData = new FormData(element);
+
+  const settings = {
+    method: 'post',
+    data: fData
+  };
+
+  fetch('DeleteFile', settings) // deletefile is the name of servlet
+  .then( (response) => {
+    return response.json();
+  })
+  .then( (result) => {
+    console.log(result);
+  });
+};
