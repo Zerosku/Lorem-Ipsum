@@ -282,13 +282,28 @@ aside > .button {
     justify-content: center;
 }
 
-.folder, .file {
-  width: 170px;
-  height: 165px;
+.file {
+  width: 270px;
+  height: 265px;
   margin: 15px auto;
+  color: white;
   background-color: #34373c;
   position: relative;
   text-align: center;
+  word-wrap: break-word;
+  position: relative;
+}
+
+.filedesc {
+  margin: 25px;
+  background-color: #00000069;
+  position: absolute;
+}
+
+.file img {
+  max-width: 100%;
+  max-height: 100%;
+
 }
 
 .alert {
@@ -306,6 +321,7 @@ aside > .button {
   position: absolute;
   left: 0;
   top: 0;
+  background-color: #00000069;
 }
 
 .dropdown {
