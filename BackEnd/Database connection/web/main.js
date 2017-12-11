@@ -9,6 +9,8 @@ const lightbox = document.querySelector('.lightbox');
 const user_name = document.querySelector('.username');
 const uploadFile = document.querySelector('#file');
 const uploadLabel = document.querySelector('.upload-span');
+const passSign = document.querySelector('#passwordSignUp');
+const passLogin = document.querySelector('#passwordLogin');
 
 // create new DOM elements
 const dropDiv = document.createElement('div'); // container div element
@@ -30,7 +32,6 @@ deleteLink.appendChild(deleteText);
 deleteLink.className = 'smallButton';
 
 // function that gets cookie from client by cookie name
-
 function getCookie(name) {
     var dc = document.cookie;
     var prefix = name + "=";
@@ -54,7 +55,6 @@ function getCookie(name) {
 
 // checks user authentication by cookie value
 const cookie = () => {
-
   let checkAuth = getCookie("auth");
 
   if (checkAuth !== null) {
@@ -66,7 +66,7 @@ const cookie = () => {
   }
 };
 
-document.onload = cookie();
+document.onload = cookie(); // when user enters home.html
 
 // sets cookie value to null and redirects to login site
 const logout = () => {
@@ -108,6 +108,7 @@ document.addEventListener('click', (evt) => {
     }
 });
 
+// function that changes the text on upload form
 const changeUploadText = () => {
   if (uploadFile && uploadFile.value) {
     uploadLabel.innerHTML = 'File fetched';
@@ -116,3 +117,77 @@ const changeUploadText = () => {
 
   }
 }
+
+// below are the neccesary functions for password hashing
+// if you want to hash pass you must have the forms onSubmit="hashPass();"
+const convertStringToArrayBufferView = (str) => {
+	let bytes = new Uint8Array(str.length);
+	for (let iii = 0; iii < str.length; iii++) {
+		bytes[iii] = str.charCodeAt(iii);
+	}
+
+	return bytes;
+};
+
+const convertArrayBufferToHexaDecimal = (buffer) => {
+	let data_view = new DataView(buffer);
+	let iii, len, hex = '',
+		c;
+
+	for (iii = 0, len = data_view.byteLength; iii < len; iii += 1) {
+		c = data_view.getUint8(iii).toString(16);
+		if (c.length < 2) {
+			c = '0' + c;
+		}
+
+		hex += c;
+	}
+
+	return hex;
+};
+
+const hashSign = () => {
+
+	let pass = passLogin.value;
+	const crypto = window.crypto || window.msCrypto;
+
+	if (crypto.subtle) {
+		alert("Cryptography API Supported");
+
+		const promise = crypto.subtle.digest({
+			name: "SHA-256"
+		}, convertStringToArrayBufferView(pass));
+
+		promise.then(function (result) {
+			const hash_value = convertArrayBufferToHexaDecimal(result);
+			console.log("hash: " + hash_value)
+			passLogin.value = hash_value;
+      console.log(password.value);
+		});
+	} else {
+		alert("Cryptography API not Supported");
+	}
+};
+
+const hashLogin = () => {
+
+	let pass = passSign.value;
+	const crypto = window.crypto || window.msCrypto;
+
+	if (crypto.subtle) {
+		alert("Cryptography API Supported");
+
+		const promise = crypto.subtle.digest({
+			name: "SHA-256"
+		}, convertStringToArrayBufferView(pass));
+
+		promise.then(function (result) {
+			const hash_value = convertArrayBufferToHexaDecimal(result);
+			console.log("hash: " + hash_value)
+			passSign.value = hash_value;
+      console.log(password.value);
+		});
+	} else {
+		alert("Cryptography API not Supported");
+	}
+};

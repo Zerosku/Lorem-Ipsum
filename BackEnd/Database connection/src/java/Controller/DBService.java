@@ -1,6 +1,7 @@
 
 package Controller;
  
+import Model.Files;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ws.rs.Produces;
@@ -20,6 +21,8 @@ import java.util.Date;
  */
 @Path("service")
 public class DBService {
+    
+
  
     @EJB
     private DBControl dbc;
@@ -45,9 +48,9 @@ public class DBService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("jsonboii")
-    public String jaskason() {
+    public List<Files> jaskason(@CookieParam("auth") String user) {
         
-        return dbc.getMedia().toString();
+        return dbc.getMedia(user);
     }
  
     @POST

@@ -31,11 +31,13 @@ import javax.xml.bind.annotation.XmlTransient;
  *
  * @author joona
  */
+
 @Entity
 @Table(name = "files")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Files.findAll", query = "SELECT f FROM Files f")
+    , @NamedQuery(name = "Files.findUserFiles", query = "SELECT f.filePath,f.fileName FROM Files f WHERE f.username = :username")
     , @NamedQuery(name = "Files.findByFileId", query = "SELECT f FROM Files f WHERE f.fileId = :fileId")
     , @NamedQuery(name = "Files.findByFileName", query = "SELECT f FROM Files f WHERE f.fileName = :fileName")
     , @NamedQuery(name = "Files.findByUploadDate", query = "SELECT f FROM Files f WHERE f.uploadDate = :uploadDate")
@@ -69,7 +71,7 @@ public class Files implements Serializable {
     @JoinColumn(name = "folder_id", referencedColumnName = "folder_id")
     @ManyToOne
     private Folder folderId;
-
+    
     public Files() {
     }
 
@@ -160,11 +162,6 @@ public class Files implements Serializable {
             return false;
         }
         return true;
-    }
-
-    @Override
-    public String toString() {
-        return "("+filePath+":"+fileName+":"+username+")";
     }
     
 }

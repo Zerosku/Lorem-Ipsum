@@ -33,8 +33,8 @@ public class DBControl {
         return em.createNamedQuery("users.findByName").toString();
     }
     
-    public List<Files> getMedia(){
-        List<Files> lst = em.createNamedQuery("Files.findAll").getResultList();
+    public List<Files> getMedia(String username){
+        List<Files> lst = em.createNamedQuery("Files.findUserFiles").setParameter("username", username).getResultList();
         return lst;
     }
     
