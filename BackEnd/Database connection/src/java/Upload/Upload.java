@@ -19,8 +19,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
-
 /**
  *
  * @author joonasrl
@@ -44,7 +42,7 @@ public class Upload extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
             
-        response.setContentType("application/json");
+        response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             
             Cookie[] cookies = request.getCookies();
@@ -55,19 +53,23 @@ public class Upload extends HttpServlet {
                 username = cookies[i].getValue();
                 
               }
-            
+            //fileupload
             request.getPart("fileup").write(request.getPart("fileup").getSubmittedFileName());
-            out.print("{\"src\" : \"10.114.34.143/uploads/" + request.getPart("fileup").getSubmittedFileName() +"\"}");
+            //out.print("{\"src\" : \"10.114.34.143/uploads/" + request.getPart("fileup").getSubmittedFileName() +"\"}");
             String filePath = "10.114.34.143/uploads/" + request.getPart("fileup").getSubmittedFileName();
             String fileName = request.getPart("fileup").getSubmittedFileName();
-            Users u = new Users();
-            int user_id = u.getUserId(); 
+            
+            out.println("<script type='text/javascript'>");
+            out.println("alert('File uploaded successfully')");
+            out.println("window.location.href = 'home.html';");
+            out.println("</script>");
             
             Files f = new Files();
-            
+            //sets username into db
             f.setUsername(username);
-            //u.setUserId(user_id);
+            //sets filename into db
             f.setFileName(fileName);
+            //sets filepath into db
             f.setFilePath(filePath);
             dbc.insertFiles(f);
             

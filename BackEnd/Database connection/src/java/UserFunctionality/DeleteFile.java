@@ -31,37 +31,36 @@ import static javax.swing.JOptionPane.showMessageDialog;
  * 
  * @author oskar
  */
-public class LoginServlet extends HttpServlet {
+public class DeleteFile extends HttpServlet {
 
-    public void doPost(HttpServletRequest request,HttpServletResponse response)
+    public void doGet(HttpServletRequest request,HttpServletResponse response)
             throws ServletException, IOException{
         
         response.setContentType("text/html;charset=UTF-8");
         
         try(PrintWriter out = response.getWriter()){
 
-        String username = request.getParameter("t1");
-        String password = request.getParameter("t2");
+        String filename = request.getParameter("delete");
         
         MyDb db = new MyDb();
         Connection con = db.getCon();
-        PreparedStatement pst = con.prepareStatement("SELECT * FROM lorembox.users WHERE username=? AND passwrd=?");
+        PreparedStatement pst = con.prepareStatement("DELETE FROM lorembox.files WHERE file_name=?");
         
-        pst.setString(1, username);
-        pst.setString(2, password);
+        pst.setString(1, filename);
+
         ResultSet rs = pst.executeQuery();
-        
-        Cookie ck = new Cookie("auth", username);
-        ck.setMaxAge(600);
+
         
         if (rs.next()){
-            response.addCookie(ck);
-            response.sendRedirect("home.html");
+            out.println("<script type='text/javascript'>");
+            out.println("alert('File deleted succesfully')");
+            out.println("window.location.href = 'home.html';");
+            out.println("</script>");
             
         } else {
             out.println("<script type='text/javascript'>");
-            out.println("alert('Wrong username or password')");
-            out.println("window.location.href = 'index.html';");
+            out.println("alert('There was an error deleting your file. Please contact server administrator')");
+            out.println("window.location.href = 'home.html';");
             out.println("</script>");
         }
         

@@ -15,20 +15,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- *
+ * This class is used to expire the cookie when logging out. Default cookie
+ * expiration time is 10min.
  * @author oskar
  */
 @WebServlet(name = "Logout", urlPatterns = {"/Logout"})
 public class Logout extends HttpServlet {
 
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * Creates the same cookie that was created when the user logged in, but with value null.
+     * Has expiration time of 1s.
+     * After cookie has been nullified, a redirection takes the user to the login page.
+     * 
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException 
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -39,7 +41,7 @@ public class Logout extends HttpServlet {
             ck.setHttpOnly(true);
             ck.setMaxAge(1);
             response.addCookie(ck);
-            response.sendRedirect("home.html");
+            response.sendRedirect("index.html");
         }
     }
 

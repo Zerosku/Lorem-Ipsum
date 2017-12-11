@@ -10,17 +10,22 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
- *
+ * This class is used to connect to our database.
  * @author oskar
  */
 public class MyDb {
     
     public Connection con;
     
+    /**
+     * getCon() is called when a connection to the database is needed.
+     * @return 
+     */
     public Connection getCon(){
         try {
             
             Class.forName("com.mysql.jdbc.Driver");
+            // Database address and credentials
             con =  DriverManager.getConnection("jdbc:mysql://10.114.34.143/lorembox","dbuser","loremipsum");
             System.out.println("Connected to database");
             

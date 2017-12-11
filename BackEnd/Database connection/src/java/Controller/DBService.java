@@ -11,6 +11,7 @@ import javax.ws.rs.core.MediaType;
 import Model.Users;
 import UserFunctionality.MyDb;
 import java.io.PrintWriter;
+import static java.lang.System.out;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.Date;
@@ -21,9 +22,7 @@ import java.util.Date;
  */
 @Path("service")
 public class DBService {
-    
-
- 
+   
     @EJB
     private DBControl dbc;
  
@@ -32,11 +31,8 @@ public class DBService {
      */
     public DBService() {
     }
- 
-    /**
-     * Retrieves representation of an instance of Controller.DBService
-     * @return an instance of java.lang.String
-     */
+
+    //JSON for users
     @GET
     @Produces(MediaType.APPLICATION_JSON)
 
@@ -44,7 +40,7 @@ public class DBService {
       
         return dbc.getAll();
     }
-    
+    //Prints JSON file depending on who is logged in through cookie
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("jsonboii")
@@ -52,7 +48,8 @@ public class DBService {
         
         return dbc.getMedia(user);
     }
- 
+    
+    //new user register
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Path("setpass")
@@ -70,7 +67,10 @@ public class DBService {
             ResultSet rs = stmt.executeQuery(SQL);
  
             if (rs.next()) {
-                System.out.println("Username "+name+" already taken!");
+            out.println("<script type='text/javascript'>");
+            out.println("alert('Wrong username or password')");
+            out.println("window.location.href = 'index.html';");
+            out.println("</script>");
  
             } else {
                 

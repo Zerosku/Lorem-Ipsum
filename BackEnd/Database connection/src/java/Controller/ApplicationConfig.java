@@ -11,6 +11,7 @@ import javax.ws.rs.core.Application;
 /**
  *
  *@author joonasrl
+ * this is an automatically created class
  */
 @javax.ws.rs.ApplicationPath("db")
 public class ApplicationConfig extends Application {
