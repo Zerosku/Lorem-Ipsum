@@ -19,6 +19,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * This servlet is called when a file needs to be removed from the website.
+ * Javascript gives this servlet the name of the file that needs to be deleted.
+ * It runs a query that simply deletes information of the file from the database.
+ * The file still remains on the server but all connection to it is broken.
+ * 
+ * @author oskar
+ */
+
 public class DeleteFile extends HttpServlet {
 
     public void doPost(HttpServletRequest request,HttpServletResponse response)
@@ -29,7 +38,6 @@ public class DeleteFile extends HttpServlet {
         try(PrintWriter out = response.getWriter()){
 
         String input = request.getParameter("delete");
-        //ServletInputStream input = request.getInputStream();
         
         String filename = input.toString();
         

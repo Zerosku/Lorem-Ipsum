@@ -24,11 +24,10 @@ import javax.servlet.http.HttpServletResponse;
 import static javax.swing.JOptionPane.showMessageDialog;
 
 /**
- * This class runs a query with the user inputting USERNAME and PASSWORD.
  * 
- * It starts with requesting parameters from html form. After that it creates a
- * connection to the database. Then it runs a query and if it goes through,
- * a cookie is created with username as value and home.html is accessible by the user.
+ * This class reads value from cookie that the user gets to the client when logging in.
+ * It runs a query using the cookies value to give the files that the user has uploaded.
+ * 
  * 
  * @author oskar
  */

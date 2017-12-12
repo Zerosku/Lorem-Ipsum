@@ -295,7 +295,8 @@ aside > .button {
 }
 
 .filedesc {
-  margin: 25px;
+  margin-top: 5px;
+  margin-left: 40px;
   background-color: #00000069;
   position: absolute;
 }
