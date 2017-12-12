@@ -7,7 +7,7 @@ A school project web application & server meant for storing files for private us
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-Download the project (LoremIpsum) as a zip and you will get two folders containing the project's FrontEnd and BackEnd. To deploy the project, find the project under BackEnd > LoremBox folder and open it in an IDE you prefer. (Netbeans was used for creating the project)
+Download the project (LoremIpsum) as a zip and you will get two folders containing the project's FrontEnd and BackEnd. To deploy the project, **find the project under BackEnd > Database Connection** folder and open it in an IDE you prefer. (Netbeans was used for creating the project)
 
 ### Prerequisites
 Install netbeans ide 8.2 or later
